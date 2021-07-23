@@ -42,7 +42,7 @@
 
   const settings = {
     amountWidget: {
-      defaultValue: 1,
+      defaultValue: 5,
       defaultMin: 0,
       defaultMax: 10,
     }
@@ -188,12 +188,12 @@
             price -= option.price;
           }
         }
-        /*multiply price by annount*/
-        price *= thisProduct.amountWidget.value;
-        // update calculated price in the HTML
-
-        thisProduct.priceElem.innerHTML = price;
       }
+      /*multiply price by annount*/
+      price *= thisProduct.amountWidget.value;
+      // update calculated price in the HTML
+
+      thisProduct.priceElem.innerHTML = price;
     }
 
     initAmountWidget() {
@@ -209,7 +209,7 @@
     constructor(element) {
       const thisWidget = this;
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(settings.amountWidget.defaultValue);
       thisWidget.initActions();
 
       console.log('AmountWidget', thisWidget);
@@ -228,30 +228,30 @@
       const newValue = parseInt(value);
       console.log('newValue', newValue);
       /* Add validation */
-      if(thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
+      if (thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
         thisWidget.value = newValue;
       }
 
       thisWidget.input.value = thisWidget.value;
       thisWidget.announce();
     }
-    initActions(event) {
+    initActions() {
       const thisWidget = this;
 
-      thisWidget.input.addEventListener('change', function () {
+      thisWidget.input.addEventListener('change', function() {
         thisWidget.setValue(thisWidget.input.value);
       });
 
-      thisWidget.linkDecrease.addEventListener('click',function(event) {
-      event.preventDefault();
-      thisWidget.setValue(thisWidget.value - 1);
-    });
-      thisWidget.linkIncrease.addEventListener('click', function (event) {
+      thisWidget.linkDecrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      });
+      thisWidget.linkIncrease.addEventListener('click', function(event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
       });
     }
-    announce(){
+    announce() {
       const thisWidget = this;
       const event = new CustomEvent('updated');
       thisWidget.element.dispatchEvent(event);
