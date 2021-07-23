@@ -94,6 +94,7 @@
       console.log('cartButton', thisProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       console.log('priceElem', thisProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
     initAccordion() {
       const thisProduct = this;
@@ -165,24 +166,29 @@
           console.log(optionId, option);
 
           // check if there is param with a name of paramId in formData and if it includes optionId
-          if (formData[paramId] && formData[paramId].includes(optionId)) {
-            // check if the option is not default
-            if (!option.default) {
-              // add option price to price variable
-              price = price + option.price;
-              console.log ('price', price);
-            }
-          } else {
-            // check if the option is default
-            if (option.default) {
-              // reduce price variable
-              price = price - option.price;
+          let optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          // check if the option is not default
+          let optionImg = thisProduct.imageWrapper.querySelector(
+            '.' + paramId + '-' + optionId
+          );
+          if (optionImg) {
+            if (optionSelected)
+              optionImg.classList.add(classNames.menuProduct.imageVisible);
+            else {
+              optionImg.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
+          if (optionSelected && !option.default) {
+            price += option.price;
+          }
+
+          if (!optionSelected && option.default) {
+            price -= option.price;
+          }
         }
+        // update calculated price in the HTML
+        thisProduct.priceElem.innerHTML = price;
       }
-      // update calculated price in the HTML
-      thisProduct.priceElem.innerHTML = price;
     }
   }
 
