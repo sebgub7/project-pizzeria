@@ -366,6 +366,14 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function() {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+
+      thisCart.dom.productList.addEventListener('updated', function() {
+        thisCart.update();
+      });
+
+      thisCart.dom.productList.addEventListener('remove', function(event) {
+        thisCart.remove(event.detail.cartProduct);
+      });
     }
     add(menuProduct) {
       const thisCart = this;
@@ -391,7 +399,7 @@
       }
       if (thisCart.totalNumber === 0) {
         thisCart.totalPrice = 0;
-        thisCart.totalPrice = 0;
+        thisCart.deliveryFee = 0;
       } else {
         thisCart.totalPrice = thisCart.subTotalPrice + thisCart.deliveryFee;
         for (let price of thisCart.dom.totalPrice) {
@@ -404,6 +412,13 @@
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
       console.log('thisCart.totalPrice', thisCart.totalPrice);
       console.log('totalNumber', thisCart.totalNumber);
+    }
+    remove(CartProduct) {
+      const thisCart = this;
+      const indexOfProduct = thisCart.products.indexOf(CartProduct);
+      thisCart.products.splice(indexOfProduct, 1);
+      CartProduct.dom.wrapper.remove();
+      thisCart.update();
     }
   }
 
@@ -418,6 +433,7 @@
       thisCartProduct.params = menuProduct.params;
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
       console.log('thisCartProduct', thisCartProduct);
     }
     getElements(element) {
@@ -434,9 +450,32 @@
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
       thisCartProduct.dom.amountWidget.addEventListener('updated', function() {
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
-        thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;;
+        thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
+    }
+
+    initActions() {
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function(event) {
+        event.preventDefault;
+      });
+
+      thisCartProduct.dom.remove.addEventListener('click', function(event) {
+        event.preventDefault;
+        thisCartProduct.remove();
+      });
+    }
+    remove() {
+      const thisCartProduct = this;
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
     }
   }
   const app = {
@@ -473,3 +512,5 @@
 
   app.init();
 }
+// TotalPrice nie zmienia sie po wyczyszczeniu koszyka
+// Problem z liczbą sztuk w koszyku po dodaniu wiecej niz 1
