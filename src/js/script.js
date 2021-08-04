@@ -523,13 +523,14 @@
     }
     getData() {
       const thisCartProduct = this;
-      let productData = {};
-      productData.id = thisCartProduct.id;
-      productData.amount = thisCartProduct.amount;
-      productData.name = thisCartProduct.name;
-      productData.priceSingle = thisCartProduct.priceSingle;
-      productData.price = thisCartProduct.price;
-      productData.params = thisCartProduct.params;
+      let productData = {
+        productData.id = thisCartProduct.id,
+        productData.amount = thisCartProduct.amount,
+        productData.name = thisCartProduct.name,
+        productData.priceSingle = thisCartProduct.priceSingle,
+        productData.price = thisCartProduct.price,
+        productData.params = thisCartProduct.params,
+      };
 
       return productData;
     }
