@@ -524,12 +524,12 @@
     getData() {
       const thisCartProduct = this;
       let productData = {
-        productData.id = thisCartProduct.id,
-        productData.amount = thisCartProduct.amount,
-        productData.name = thisCartProduct.name,
-        productData.priceSingle = thisCartProduct.priceSingle,
-        productData.price = thisCartProduct.price,
-        productData.params = thisCartProduct.params,
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        name: thisCartProduct.name,
+        priceSingle: thisCartProduct.priceSingle,
+        price: thisCartProduct.price,
+        params: thisCartProduct.params,
       };
 
       return productData;
@@ -580,5 +580,3 @@
 
   app.init();
 }
-// TotalPrice nie zmienia sie po wyczyszczeniu koszyka
-// Problem z liczbą sztuk w koszyku po dodaniu wiecej niz 1
