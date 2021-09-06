@@ -58,16 +58,16 @@ class Booking {
       fetch(urls.eventsRepeat),
     ]);
     fetch(urls.booking).then(function(allResponses) {
-        const bookingsResponse = allResponses[0];
-        const eventsCurrentResponse = allResponses[1];
-        const eventsRepeatResponse = allResponses[2];
+      const bookingsResponse = allResponses[0];
+      const eventsCurrentResponse = allResponses[1];
+      const eventsRepeatResponse = allResponses[2];
 
-        return Promise.all([
-          bookingsResponse.json(),
-          eventsCurrentResponse.json(),
-          eventsRepeatResponse.json(),
-        ]);
-      })
+      return Promise.all([
+        bookingsResponse.json(),
+        eventsCurrentResponse.json(),
+        eventsRepeatResponse.json(),
+      ]);
+    })
       .then(function([bookings, eventsCurrent, eventsRepeat]) {
         //console.log(bookings);
         //console.log(eventsCurrent);
@@ -92,9 +92,9 @@ class Booking {
     const maxDate = thisBooking.datePicker.maxDate;
 
     for (let item of eventsRepeat) {
-      if(item.repeat == 'daily'){
-        for (let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)){
-      thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
+      if (item.repeat == 'daily') {
+        for (let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)) {
+          thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
         }
       }
     }
@@ -105,6 +105,8 @@ class Booking {
 
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
+    thisBooking.booked = {};
+
     if (typeof thisBooking.booked[date] == 'undefined') {
       thisBooking.booked[date] = {};
     }
@@ -123,14 +125,15 @@ class Booking {
 
   updateDOM() {
     const thisBooking = this;
+    thisBooking.booked = {};
+    
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
     let allAvailable = false;
     if (
-      typeof thisBooking.booked[thisBooking.date] == 'undefined'
-      ||
+      typeof thisBooking.booked[thisBooking.date] == 'undefined' ||
       typeof thisBooking.booked[thisBooking.date][thisBooking.hour] ==
-        'undefined'
+      'undefined'
     ) {
       allAvailable = true;
     }
@@ -171,7 +174,7 @@ class Booking {
     thisBooking.dom.hoursAmount.addEventListener('updated', function() {});
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
-    thisBooking.dom.wrapper.addEventListener('updated', function(){
+    thisBooking.dom.wrapper.addEventListener('updated', function() {
       thisBooking.updateDOM();
     });
   }
