@@ -1,4 +1,4 @@
-import BaseWidget from '../Components/baseWidget.js';
+import BaseWidget from '../components/baseWidget.js';
 import {
   select,
   settings
