@@ -54,20 +54,20 @@ class Booking {
     //console.log('getData urls', urls);
 
     Promise.all([
-        fetch(urls.booking),
-        fetch(urls.eventsCurrent),
-        fetch(urls.eventsRepeat),
-      ]).then(function(allResponses) {
-        const bookingsResponse = allResponses[0];
-        const eventsCurrentResponse = allResponses[1];
-        const eventsRepeatResponse = allResponses[2];
+      fetch(urls.booking),
+      fetch(urls.eventsCurrent),
+      fetch(urls.eventsRepeat),
+    ]).then(function(allResponses) {
+      const bookingsResponse = allResponses[0];
+      const eventsCurrentResponse = allResponses[1];
+      const eventsRepeatResponse = allResponses[2];
 
-        return Promise.all([
-          bookingsResponse.json(),
-          eventsCurrentResponse.json(),
-          eventsRepeatResponse.json(),
-        ]);
-      })
+      return Promise.all([
+        bookingsResponse.json(),
+        eventsCurrentResponse.json(),
+        eventsRepeatResponse.json(),
+      ]);
+    })
       .then(function([bookings, eventsCurrent, eventsRepeat]) {
         //console.log(bookings);
         //console.log(eventsCurrent);
@@ -105,7 +105,7 @@ class Booking {
 
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
-    thisBooking.booked = {};
+    //thisBooking.booked = {};
 
     if (typeof thisBooking.booked[date] == 'undefined') {
       thisBooking.booked[date] = {};
@@ -124,8 +124,9 @@ class Booking {
   }
 
   updateDOM() {
+    console.log("124532532");
     const thisBooking = this;
-    thisBooking.booked = {};
+    //thisBooking.booked = {};
 
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
@@ -261,7 +262,7 @@ class Booking {
     const url = settings.db.url + '/' + settings.db.booking;
 
     const payload = {
-      data: thisBooking.date.value,
+      date: thisBooking.date.value,
       hour: thisBooking.hourPicker.value,
       table: Number(thisBooking.slectedTable),
       duration: thisBooking.hoursAmount.value,
@@ -296,7 +297,7 @@ class Booking {
       })
       .then(
         thisBooking.makeBooked(
-          payload.data,
+          payload.date,
           payload.hour,
           payload.duration,
           payload.table

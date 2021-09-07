@@ -12,6 +12,7 @@
         "test": "npm-run-all test:*",
         "test:html": "html-validate src/*.html",
         "test:js": "eslint src/js/",
+        "fix:js": "eslint --fix src/js/",
         "test:scss": "stylelint src/sass/",
         "build": "npm-run-all build:* test",
         "build:clean": "rimraf dist && mkdirp dist",
