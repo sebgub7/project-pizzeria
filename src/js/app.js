@@ -7,6 +7,7 @@ import {
 import Product from './components/product.js';
 import Cart from './components/cart.js';
 import Booking from './components/booking.js';
+import Home from './components/Home.js';
 
 const app = {
   initBooking: function(){
@@ -82,6 +83,7 @@ const app = {
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
   },
+
   initCart: function() {
     const thisApp = this;
     const cartElem = document.querySelector(select.containerOf.cart);
@@ -92,6 +94,12 @@ const app = {
     thisApp.productList.addEventListener('add-to-cart', function(event) {
       app.cart.add(event.detail.product);
     });
+  },
+
+  initHome: function(){
+    const thisApp = this;
+    const homeWidget = document.querySelector(select.containerOf.home);
+    thisApp.home = new Home(homeWidget);
   },
 
   init: function() {
@@ -106,6 +114,7 @@ const app = {
     thisApp.initCart();
     thisApp.initPages();
     thisApp.initBooking();
+    thisApp.initHome();
   },
 };
 

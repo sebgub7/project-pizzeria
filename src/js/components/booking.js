@@ -124,7 +124,7 @@ class Booking {
   }
 
   updateDOM() {
-    console.log("124532532");
+    console.log('124532532');
     const thisBooking = this;
     //thisBooking.booked = {};
 
