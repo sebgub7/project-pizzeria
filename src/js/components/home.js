@@ -2,6 +2,7 @@
 import {
   templates,
   select,
+  classNames,
 } from '../settings.js';
 
 class Home {
@@ -28,7 +29,6 @@ class Home {
       wrapAround: true,
       pageDots: false,
     });
-
   }
 }
 

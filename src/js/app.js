@@ -7,7 +7,7 @@ import {
 import Product from './components/product.js';
 import Cart from './components/cart.js';
 import Booking from './components/booking.js';
-import Home from './components/Home.js';
+import Home from './components/home.js';
 
 const app = {
   initBooking: function(){

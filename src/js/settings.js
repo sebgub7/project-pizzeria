@@ -11,6 +11,7 @@ export const select = {
     pages: '#pages',
     booking: '.booking-wrapper',
     home: '.home-wrapper',
+    order: '.order',
   },
   all: {
     menuProducts: '#product-list > .product',
@@ -73,7 +74,10 @@ export const select = {
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
   },
-  // CODE ADDED END
+  home:{
+    orderOnline: '.order-online',
+    bookTable: '.book-table',
+  },
 };
 
 export const classNames = {
