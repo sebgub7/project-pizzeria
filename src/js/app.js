@@ -32,18 +32,24 @@ const app = {
       }
     }
     thisApp.activatePage(pageMatchingHash);
+
     for (let link of thisApp.navLinks) {
-      link.addEventListener('click', function(event) {
-        const clickedElement = this;
-        event.preventDefault();
-        /* get page id from href attribute */
-        const id = clickedElement.getAttribute('href').replace('#', '');
-        /* run thisApp.activatePage with that id */
-        thisApp.activatePage(id);
-        /*change URL hash */
-        window.location.hash = '#/' + id;
-      });
+      this.routePage(link);
     }
+  },
+  routePage: function(link) {
+    console.log('route page', link);
+    const thisApp = this;
+    link.addEventListener('click', function(event) {
+      const clickedElement = this;
+      event.preventDefault();
+      /* get page id from href attribute */
+      const id = clickedElement.getAttribute('href').replace('#', '');
+      /* run thisApp.activatePage with that id */
+      thisApp.activatePage(id);
+      /*change URL hash */
+      window.location.hash = '#/' + id;
+    });
   },
   activatePage: function(pageId) {
     const thisApp = this;
@@ -99,7 +105,7 @@ const app = {
   initHome: function(){
     const thisApp = this;
     const homeWidget = document.querySelector(select.containerOf.home);
-    thisApp.home = new Home(homeWidget);
+    thisApp.home = new Home(homeWidget, thisApp.routePage.bind(thisApp));
   },
 
   init: function() {

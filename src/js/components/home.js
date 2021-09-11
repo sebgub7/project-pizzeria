@@ -2,15 +2,18 @@
 import {
   templates,
   select,
-  classNames,
 } from '../settings.js';
 
 class Home {
 
-  constructor(element) {
+  constructor(element, routePage) {
     const thisHome = this;
     thisHome.render(element);
     thisHome.initWidgets();
+    const links = document.querySelectorAll('.starter-text a');
+    for (let link of links) {
+      routePage(link);
+    }
   }
   render(element) {
     const thisHome = this;
