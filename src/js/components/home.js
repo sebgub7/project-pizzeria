@@ -2,7 +2,6 @@
 import {
   templates,
   select,
-  classNames,
 } from '../settings.js';
 
 class Home {
